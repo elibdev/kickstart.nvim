@@ -130,15 +130,14 @@ require('lazy').setup({
   },
 
   {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    "catppuccin/nvim",
+    name = "catppuccin",
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
-      require('onedark').setup({
-        style = 'warmer'
+      require('catppuccin').setup({
+        flavour = 'mocha'
       })
-      require('onedark').load()
+      vim.cmd.colorscheme "catppuccin"
     end,
   },
 
@@ -146,14 +145,28 @@ require('lazy').setup({
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
-    opts = {
-      options = {
-        icons_enabled = false,
-        theme = 'onedark',
-        component_separators = '|',
-        section_separators = '',
-      },
-    },
+    config = function()
+      -- make the background bar the same color as theme background so it blends in
+      local theme = require("lualine.themes.catppuccin-mocha")
+      local palette = require("catppuccin.palettes.mocha")
+      theme.normal.c.bg = palette.base
+      require('lualine').setup({
+        options = {
+          theme = theme,
+          icons_enabled = false,
+          component_separators = '|',
+          section_separators = '',
+        },
+        sections = {
+          lualine_a = {'mode'},
+          lualine_b = {'branch'},
+          lualine_c = {'filename'},
+          lualine_x = {'filetype'},
+          lualine_y = {'progress'},
+          lualine_z = {'location'}
+        }
+      })
+    end
   },
 
   {
