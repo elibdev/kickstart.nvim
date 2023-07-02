@@ -135,6 +135,10 @@ require('lazy').setup({
     priority = 1000,
     config = function()
       vim.cmd.colorscheme 'onedark'
+      require('onedark').setup({
+        style = 'warmer'
+      })
+      require('onedark').load()
     end,
   },
 
@@ -427,7 +431,7 @@ end
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  -- pyright = {},
+  pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},
 
@@ -510,6 +514,25 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+-- make escape exit terminal mode
+-- https://neovim.io/doc/user/nvim_terminal_emulator.html
+vim.cmd.tnoremap('<Esc>', '<C-\\><C-n>')
+-- To use ALT+{h,j,k,l} to navigate windows from any mode:
+vim.cmd.tnoremap('<A-h>', '<C-\\><C-N><C-w>h')
+vim.cmd.tnoremap('<A-j>', '<C-\\><C-N><C-w>j')
+vim.cmd.tnoremap('<A-k>', '<C-\\><C-N><C-w>k')
+vim.cmd.tnoremap('<A-l>', '<C-\\><C-N><C-w>l')
+vim.cmd.inoremap('<A-h>', '<C-\\><C-N><C-w>h')
+vim.cmd.inoremap('<A-j>', '<C-\\><C-N><C-w>j')
+vim.cmd.inoremap('<A-k>', '<C-\\><C-N><C-w>k')
+vim.cmd.inoremap('<A-l>', '<C-\\><C-N><C-w>l')
+vim.cmd.nnoremap('<A-h>', '<C-w>h')
+vim.cmd.nnoremap('<A-j>', '<C-w>j')
+vim.cmd.nnoremap('<A-k>', '<C-w>k')
+vim.cmd.nnoremap('<A-l>', '<C-w>l')
+
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
